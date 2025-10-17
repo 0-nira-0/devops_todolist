@@ -1,47 +1,55 @@
-1. Docker Hub Image
+Docker Hub Image
 
-Full image reference: 0nira0/todoapp:1.0.0
-Local tag for convenience: todoapp:1.0.0
+Image has been pushed to Docker Hub and is publicly available:
 
-2. Build the Docker Image
+0nira0/todoapp:1.0.0
 
-Build with Python version ARG and tags:
 
-docker build --build-arg PYTHON_VERSION=3.8 -t todoapp:1.0.0 -t 0nira0/todoapp:1.0.0 .
+Direct link to the tag:
+https://hub.docker.com/r/0nira0/todoapp/tags
 
-3. Publish the Image
+A local alias can also be used:
 
-Login and push to Docker Hub:
+todoapp:1.0.0
 
+
+Example of creating the local tag from the pushed image:
+
+docker tag 0nira0/todoapp:1.0.0 todoapp:1.0.0
+
+Build Instructions
+
+Python 3.8 or higher is required (Django 4+).
+
+Example build using a specific Python version:
+
+docker build --build-arg PYTHON_VERSION=3.10 -t todoapp:1.0.0 -t 0nira0/todoapp:1.0.0 .
+
+Publish to Docker Hub
 docker login
 docker push 0nira0/todoapp:1.0.0
 
 
-If needed, tag locally before pushing:
+(If the image was only built as todoapp:1.0.0, tag it first before pushing.)
 
-docker tag todoapp:1.0.0 0nira0/todoapp:1.0.0
+Run Instructions
 
-4. Run the Container
+Standard run:
 
-Run in detached mode with automatic removal:
-
-docker run -d --rm -p 8080:8080 todoapp:1.0.0
+docker run -p 8080:8080 0nira0/todoapp:1.0.0
 
 
-The container runs:
+Detached mode with automatic cleanup:
+
+docker run -d --rm -p 8080:8080 0nira0/todoapp:1.0.0
+
+
+The container executes:
 
 python manage.py runserver 0.0.0.0:8080
 
-5. Access the Application
+Accessing the Application
 
-Open a browser and go to:
+Open your browser at:
 
 http://localhost:8080
-
-6. Verification Checklist
-
-Server reachable at http://localhost:8080/
-
-Database migrations executed during build (RUN python manage.py migrate)
-
-ENV PYTHONUNBUFFERED=1 is set to allow live logs
